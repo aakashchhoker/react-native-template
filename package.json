@@ -1,0 +1,55 @@
+{
+  "name": "StarterApp",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "react-native start",
+    "android": "react-native run-android --mode=qaDebug --appId=com.starterapp.qa",
+    "android:qa": "cd android && ./gradlew assembleQaRelease && cd .. && echo '\\nQA APK:' && find android/app/build/outputs/apk/qa/release -name '*.apk'",
+    "android:prod": "cd android && ./gradlew assembleProdRelease && cd .. && echo '\\nProd APK:' && find android/app/build/outputs/apk/prod/release -name '*.apk'",
+    "android:prod:aab": "cd android && ./gradlew bundleProdRelease && cd .. && echo '\\nProd AAB:' && find android/app/build/outputs/bundle/prodRelease -name '*.aab'",
+    "android:clean": "cd android && ./gradlew clean && cd ..",
+    "ios": "react-native run-ios",
+    "ios:pods": "cd ios && bundle exec pod install && cd ..",
+    "ios:archive": "xcodebuild -workspace ios/StarterApp.xcworkspace -scheme StarterApp -configuration Release -archivePath ios/build/StarterApp.xcarchive archive",
+    "ios:ipa": "xcodebuild -exportArchive -archivePath ios/build/StarterApp.xcarchive -exportOptionsPlist ios/ExportOptions.plist -exportPath ios/build/ipa",
+    "lint": "eslint .",
+    "test": "jest --watchman=false",
+    "test:coverage": "jest --watchman=false --coverage --watchAll=false"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^3.1.1",
+    "@react-navigation/bottom-tabs": "^7.19.1",
+    "@react-navigation/native": "^7.4.1",
+    "@react-navigation/native-stack": "^7.19.1",
+    "lucide-react-native": "^1.47.0",
+    "react": "19.2.3",
+    "react-native": "0.87.1",
+    "react-native-gesture-handler": "^3.3.0",
+    "react-native-reanimated": "^4.6.0",
+    "react-native-safe-area-context": "^5.10.0",
+    "react-native-screens": "^4.28.0",
+    "react-native-svg": "^15.15.5",
+    "react-native-worklets": "^0.12.2",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-community/cli": "20.2.0",
+    "@react-native-community/cli-platform-android": "20.2.0",
+    "@react-native-community/cli-platform-ios": "20.2.0",
+    "@react-native/babel-preset": "0.87.1",
+    "@react-native/eslint-config": "0.87.1",
+    "@react-native/jest-preset": "0.87.1",
+    "@react-native/metro-config": "0.87.1",
+    "eslint": "^8.19.0",
+    "jest": "^29.6.3",
+    "prettier": "2.8.8",
+    "react-test-renderer": "19.2.3"
+  },
+  "engines": {
+    "node": ">= 22.11.0"
+  }
+}

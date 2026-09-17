@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  ExportOptions.plist — used by: npm run ios:export:ipa
+  ======================================================
+  Update the values below to match your Apple Developer account.
+
+  method:
+    - "app-store"           → for App Store / TestFlight distribution
+    - "ad-hoc"              → for ad-hoc / QA distribution (requires registered UDIDs)
+    - "enterprise"          → for in-house / enterprise distribution
+    - "development"         → for local development / device testing
+
+  teamID: your 10-character Apple Developer Team ID (found in developer.apple.com → Membership)
+
+  provisioningProfiles:
+    key   = bundle identifier
+    value = exact name of the provisioning profile in your Apple account
+-->
+<plist version="1.0">
+  <dict>
+    <key>method</key>
+    <string>app-store</string>
+
+    <key>teamID</key>
+    <string>YOUR_TEAM_ID</string>
+
+    <key>uploadSymbols</key>
+    <true/>
+
+    <key>compileBitcode</key>
+    <false/>
+
+    <key>provisioningProfiles</key>
+    <dict>
+      <!-- Replace with your bundle ID and provisioning profile name -->
+      <key>com.starterapp</key>
+      <string>StarterApp AppStore Distribution</string>
+    </dict>
+
+    <key>signingStyle</key>
+    <string>manual</string>
+
+    <key>stripSwiftSymbols</key>
+    <true/>
+
+    <key>thinning</key>
+    <string>&lt;none&gt;</string>
+  </dict>
+</plist>
