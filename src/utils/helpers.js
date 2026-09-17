@@ -54,3 +54,22 @@ export const debounce = (func, wait = 300) => {
     timeout = setTimeout(() => func(...args), wait);
   };
 };
+
+/**
+ * Validates email format.
+ * @param {string} email
+ * @returns {boolean}
+ */
+export const isValidEmail = email => {
+  if (!email) return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).trim());
+};
+
+/**
+ * Basic password strength check (min 6 chars).
+ * @param {string} password
+ * @returns {boolean}
+ */
+export const isValidPassword = password => {
+  return Boolean(password && String(password).length >= 6);
+};

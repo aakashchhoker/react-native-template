@@ -4,11 +4,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { Settings, Sparkles, Activity, CheckCircle, Clock } from 'lucide-react-native';
 import { useTheme } from '../../hooks/useTheme';
+import { useAuthStore } from '../../store/authStore';
 import { AppText } from '../../components/common/AppText';
 import { AppCard } from '../../components/common/AppCard';
 import { AppButton } from '../../components/common/AppButton';
 import { AppIconButton } from '../../components/common/AppIconButton';
 import { mockStats, mockRecentActivities } from '../../data/mockData';
+import { appConfig } from '../../config/appConfig';
 import { ROUTES } from '../../constants/constants';
 import { createStyles } from './styles';
 
@@ -17,6 +19,8 @@ export const HomeScreen = () => {
   const navigation = useNavigation();
   const { theme } = useTheme();
   const styles = createStyles(theme);
+  const user = useAuthStore(state => state.user);
+  const displayName = user?.name?.split(' ')[0] || 'there';
 
   const getActivityIcon = category => {
     switch (category) {
@@ -36,7 +40,7 @@ export const HomeScreen = () => {
       <View style={styles.header}>
         <View style={styles.greetingContainer}>
           <AppText variant="caption" color="secondary">
-            WELCOME BACK
+            WELCOME BACK, {displayName.toUpperCase()}
           </AppText>
           <AppText variant="h1">Dashboard</AppText>
         </View>
@@ -58,10 +62,10 @@ export const HomeScreen = () => {
         <AppCard style={styles.bannerCard} shadow="md">
           <View style={styles.bannerContent}>
             <AppText variant="h2" style={styles.bannerTitle}>
-              Starter Template Active
+              {appConfig.appName} is ready
             </AppText>
             <AppText variant="bodySmall" style={styles.bannerSubtitle}>
-              Clean architecture ready for multiple Android and iOS apps.
+              You&apos;re signed in. Build your next feature on this dashboard.
             </AppText>
           </View>
           <AppButton

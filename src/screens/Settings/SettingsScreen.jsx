@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Sun, Moon, Smartphone, RotateCcw } from 'lucide-react-native';
+import { Sun, Moon, Smartphone, RotateCcw, LogOut } from 'lucide-react-native';
 import { useTheme } from '../../hooks/useTheme';
 import { useAppStore } from '../../store/appStore';
+import { useAuthStore } from '../../store/authStore';
 import { AppHeader } from '../../components/common/AppHeader';
 import { AppText } from '../../components/common/AppText';
 import { AppCard } from '../../components/common/AppCard';
@@ -17,6 +18,8 @@ export const SettingsScreen = () => {
   const { theme, themeMode, setThemeMode } = useTheme();
   const styles = createStyles(theme);
   const resetOnboarding = useAppStore(state => state.resetOnboarding);
+  const logout = useAuthStore(state => state.logout);
+  const user = useAuthStore(state => state.user);
 
   const themeOptions = [
     {
@@ -39,7 +42,7 @@ export const SettingsScreen = () => {
   const handleResetOnboarding = () => {
     Alert.alert(
       'Reset Onboarding',
-      'This will reset your onboarding state so you can experience the 3-step onboarding flow again.',
+      'This will reset onboarding and sign you out so you can test the full first-launch flow again.',
       [
         { text: 'Cancel', style: 'cancel' },
         {
@@ -51,6 +54,17 @@ export const SettingsScreen = () => {
         },
       ],
     );
+  };
+
+  const handleLogout = () => {
+    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Sign Out',
+        style: 'destructive',
+        onPress: () => logout(),
+      },
+    ]);
   };
 
   return (
@@ -107,6 +121,29 @@ export const SettingsScreen = () => {
           </AppCard>
         </View>
 
+        <View style={styles.section}>
+          <AppText variant="label" color="secondary" style={styles.sectionHeader}>
+            ACCOUNT
+          </AppText>
+
+          <AppCard variant="surface">
+            <View style={styles.settingRow}>
+              <AppText variant="bodyMedium">Signed in as</AppText>
+              <AppText variant="bodyMedium" color="secondary">
+                {user?.email || '—'}
+              </AppText>
+            </View>
+            <AppButton
+              title="Sign Out"
+              variant="outline"
+              size="sm"
+              leftIcon={<LogOut size={16} color={theme.primary} />}
+              onPress={handleLogout}
+              style={styles.resetButton}
+            />
+          </AppCard>
+        </View>
+
         {__DEV__ ? (
           <View style={styles.section}>
             <AppText variant="label" color="secondary" style={styles.sectionHeader}>
@@ -122,7 +159,7 @@ export const SettingsScreen = () => {
                   <View>
                     <AppText variant="label">Reset Onboarding</AppText>
                     <AppText variant="bodySmall" color="secondary">
-                      Test the first-launch flow again
+                      Clears onboarding + auth for full flow testing
                     </AppText>
                   </View>
                 </View>

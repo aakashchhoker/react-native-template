@@ -11,6 +11,8 @@ describe('STORAGE_KEYS', () => {
   it('defines required persistence keys', () => {
     expect(STORAGE_KEYS.THEME_MODE).toBeTruthy();
     expect(STORAGE_KEYS.HAS_COMPLETED_ONBOARDING).toBeTruthy();
+    expect(STORAGE_KEYS.AUTH_USER).toBeTruthy();
+    expect(STORAGE_KEYS.AUTH_CREDENTIALS).toBeTruthy();
   });
 });
 
@@ -28,6 +30,8 @@ describe('ROUTES', () => {
   it('includes splash, onboarding, and main tab routes', () => {
     expect(ROUTES.SPLASH).toBe('Splash');
     expect(ROUTES.ONBOARDING).toBe('Onboarding');
+    expect(ROUTES.LOGIN).toBe('Login');
+    expect(ROUTES.SIGNUP).toBe('Signup');
     expect(ROUTES.HOME).toBe('Home');
     expect(ROUTES.SETTINGS).toBe('Settings');
   });

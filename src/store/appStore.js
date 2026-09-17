@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { storageService } from '../services/storageService';
 import { STORAGE_KEYS } from '../constants/constants';
 import { useThemeStore } from './themeStore';
+import { useAuthStore } from './authStore';
 
 export const useAppStore = create(set => ({
   isInitialized: false,
@@ -12,10 +13,10 @@ export const useAppStore = create(set => ({
    */
   initializeApp: async () => {
     try {
-      // Parallelize critical startup storage reads
       const [onboardingStatus] = await Promise.all([
         storageService.getItem(STORAGE_KEYS.HAS_COMPLETED_ONBOARDING, false),
         useThemeStore.getState().initializeTheme(),
+        useAuthStore.getState().initializeAuth(),
       ]);
 
       set({
@@ -40,10 +41,11 @@ export const useAppStore = create(set => ({
   },
 
   /**
-   * Resets onboarding state (useful for developer testing and app reset).
+   * Resets onboarding + auth (useful for developer testing).
    */
   resetOnboarding: async () => {
     set({ hasCompletedOnboarding: false });
     await storageService.setItem(STORAGE_KEYS.HAS_COMPLETED_ONBOARDING, false);
+    await useAuthStore.getState().clearAuth();
   },
 }));

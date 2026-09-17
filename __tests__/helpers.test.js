@@ -7,6 +7,8 @@ import {
   truncateText,
   formatRelativeTime,
   debounce,
+  isValidEmail,
+  isValidPassword,
 } from '../src/utils/helpers';
 
 // ─── capitalize ───────────────────────────────────────────────────────────────
@@ -138,5 +140,23 @@ describe('debounce()', () => {
     debounced();
     jest.advanceTimersByTime(300);
     expect(fn).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('isValidEmail()', () => {
+  it('accepts valid emails', () => {
+    expect(isValidEmail('user@example.com')).toBe(true);
+  });
+
+  it('rejects invalid emails', () => {
+    expect(isValidEmail('not-an-email')).toBe(false);
+    expect(isValidEmail('')).toBe(false);
+  });
+});
+
+describe('isValidPassword()', () => {
+  it('requires at least 6 characters', () => {
+    expect(isValidPassword('123456')).toBe(true);
+    expect(isValidPassword('12345')).toBe(false);
   });
 });

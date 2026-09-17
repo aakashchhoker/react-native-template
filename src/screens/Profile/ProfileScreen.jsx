@@ -7,19 +7,37 @@ import {
   Shield,
   HelpCircle,
   ChevronRight,
+  LogOut,
 } from 'lucide-react-native';
 import { useTheme } from '../../hooks/useTheme';
+import { useAuthStore } from '../../store/authStore';
 import { AppText } from '../../components/common/AppText';
 import { AppCard } from '../../components/common/AppCard';
+import { AppButton } from '../../components/common/AppButton';
 import { mockUserProfile } from '../../data/mockData';
 import { ROUTES } from '../../constants/constants';
 import { createStyles } from './styles';
+
+const getInitials = name => {
+  if (!name) return 'U';
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(part => part[0]?.toUpperCase())
+    .join('');
+};
 
 export const ProfileScreen = () => {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const { theme } = useTheme();
   const styles = createStyles(theme);
+  const user = useAuthStore(state => state.user);
+  const logout = useAuthStore(state => state.logout);
+
+  const displayName = user?.name || mockUserProfile.name;
+  const displayEmail = user?.email || mockUserProfile.email;
 
   const menuItems = [
     {
@@ -54,13 +72,13 @@ export const ProfileScreen = () => {
       >
         <AppCard style={styles.profileCard} variant="surface">
           <View style={styles.avatar}>
-            <AppText style={styles.avatarText}>AM</AppText>
+            <AppText style={styles.avatarText}>{getInitials(displayName)}</AppText>
           </View>
           <AppText variant="h2" style={styles.name}>
-            {mockUserProfile.name}
+            {displayName}
           </AppText>
           <AppText variant="bodySmall" color="secondary">
-            {mockUserProfile.role} • {mockUserProfile.email}
+            {mockUserProfile.role} • {displayEmail}
           </AppText>
 
           <View style={styles.statsRow}>
@@ -85,7 +103,6 @@ export const ProfileScreen = () => {
           </View>
         </AppCard>
 
-        {/* Menu Items */}
         <AppCard variant="surface" style={styles.menuSection}>
           {menuItems.map(item => (
             <TouchableOpacity
@@ -102,6 +119,15 @@ export const ProfileScreen = () => {
             </TouchableOpacity>
           ))}
         </AppCard>
+
+        <AppButton
+          title="Sign Out"
+          variant="outline"
+          size="md"
+          leftIcon={<LogOut size={18} color={theme.primary} />}
+          onPress={logout}
+          style={styles.logoutButton}
+        />
       </ScrollView>
     </View>
   );

@@ -4,6 +4,8 @@
 export const STORAGE_KEYS = {
   THEME_MODE: '@app_theme_mode',
   HAS_COMPLETED_ONBOARDING: '@app_has_completed_onboarding',
+  AUTH_USER: '@app_auth_user',
+  AUTH_CREDENTIALS: '@app_auth_credentials',
   USER_PREFERENCES: '@app_user_preferences',
 };
 
@@ -16,6 +18,9 @@ export const THEME_MODES = {
 export const ROUTES = {
   SPLASH: 'Splash',
   ONBOARDING: 'Onboarding',
+  AUTH: 'Auth',
+  LOGIN: 'Login',
+  SIGNUP: 'Signup',
   MAIN_TABS: 'MainTabs',
   HOME: 'Home',
   SEARCH: 'Search',

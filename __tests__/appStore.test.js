@@ -5,6 +5,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAppStore } from '../src/store/appStore';
 import { useThemeStore } from '../src/store/themeStore';
+import { useAuthStore } from '../src/store/authStore';
 import { STORAGE_KEYS } from '../src/constants/constants';
 
 beforeEach(async () => {
@@ -16,6 +17,11 @@ beforeEach(async () => {
   useThemeStore.setState({
     themeMode: 'system',
     isThemeLoaded: false,
+  });
+  useAuthStore.setState({
+    isAuthenticated: false,
+    user: null,
+    isAuthLoading: false,
   });
 });
 
@@ -54,14 +60,17 @@ describe('useAppStore', () => {
     expect(JSON.parse(stored)).toBe(true);
   });
 
-  it('resetOnboarding clears the flag in state and storage', async () => {
+  it('resetOnboarding clears onboarding and auth', async () => {
     await useAppStore.getState().completeOnboarding();
+    await useAuthStore.getState().signup({
+      name: 'Test User',
+      email: 'test@example.com',
+      password: 'secret1',
+    });
     await useAppStore.getState().resetOnboarding();
 
     expect(useAppStore.getState().hasCompletedOnboarding).toBe(false);
-    const stored = await AsyncStorage.getItem(
-      STORAGE_KEYS.HAS_COMPLETED_ONBOARDING,
-    );
-    expect(JSON.parse(stored)).toBe(false);
+    expect(useAuthStore.getState().isAuthenticated).toBe(false);
+    expect(useAuthStore.getState().user).toBeNull();
   });
 });

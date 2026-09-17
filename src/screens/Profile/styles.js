@@ -76,4 +76,7 @@ export const createStyles = theme =>
       justifyContent: 'center',
       marginRight: spacing.md,
     },
+    logoutButton: {
+      width: '100%',
+    },
   });
