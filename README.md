@@ -4,8 +4,6 @@ A **production-ready React Native CLI boilerplate** you can clone and rebrand fo
 
 Built for speed: clean architecture, reusable UI, theming, navigation, local storage, and ready-made **QA + Play Store** build workflows — all in **pure JavaScript** (`.js` / `.jsx`).
 
-Inspired by starters like [atliq/react-native-app-starter](https://github.com/atliq/react-native-app-starter), but focused on a shippable app shell (splash → onboarding → tabs) with modern tooling.
-
 ---
 
 ## Getting Started
